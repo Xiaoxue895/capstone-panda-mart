@@ -1,32 +1,75 @@
 from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
-
-# Adds a demo user, you can add other users here if you want
 def seed_users():
-    demo = User(
-        username='Demo', email='demo@aa.io', password='password')
-    marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
-    bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+    users_data = [
+        {
+            "first_name": "Demo",
+            "last_name": "User",
+            "username": "Demo",
+            "email": "demo@aa.io",
+            "password": "password",
+            "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            "account_balance": 1000.0,
+        },
+        {
+            "first_name": "Marnie",
+            "last_name": "Smith",
+            "username": "marnie",
+            "email": "marnie@aa.io",
+            "password": "password",
+            "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            "account_balance": 1200.0,
+        },
+        {
+            "first_name": "Bobbie",
+            "last_name": "Johnson",
+            "username": "bobbie",
+            "email": "bobbie@aa.io",
+            "password": "password",
+            "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            "account_balance": 800.0,
+        },
+        {
+            "first_name": "Alice",
+            "last_name": "Wang",
+            "username": "alice",
+            "email": "alice@aa.io",
+            "password": "password",
+            "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            "account_balance": 1500.0,
+        },
+        {
+            "first_name": "Claire",
+            "last_name": "Brown",
+            "username": "claire",
+            "email": "claire@aa.io",
+            "password": "password",
+            "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            "account_balance": 950.0,
+        },
+    ]
 
-    db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    users = []
+    for user_data in users_data:
+        user = User(
+            username=user_data["username"],
+            first_name=user_data["first_name"],  
+            last_name=user_data["last_name"], 
+            email=user_data["email"],
+            password=user_data["password"], 
+            profile_url=user_data["profile_url"]
+        )
+        users.append(user)
+
+    db.session.add_all(users)
     db.session.commit()
 
-
-# Uses a raw SQL query to TRUNCATE or DELETE the users table. SQLAlchemy doesn't
-# have a built in function to do this. With postgres in production TRUNCATE
-# removes all the data from the table, and RESET IDENTITY resets the auto
-# incrementing primary key, CASCADE deletes any dependent entities.  With
-# sqlite3 in development you need to instead use DELETE to remove all data and
-# it will reset the primary keys for you as well.
 def undo_users():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM users"))
-        
     db.session.commit()
+
+
