@@ -11,8 +11,8 @@ class User(db.Model, UserMixin):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(40), nullable=False)
-    last_name = db.Column(db.String(40), nullable=False)
+    firstname = db.Column(db.String(40), nullable=False)
+    lastname = db.Column(db.String(40), nullable=False)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
@@ -43,8 +43,8 @@ class User(db.Model, UserMixin):
         return {
             "id": self.id,
             "username": self.username,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
             "profile_url": self.profile_url,
         }
     
@@ -55,8 +55,8 @@ class User(db.Model, UserMixin):
         return {
             "id": self.id,
             "username": self.username,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
             "profile_url": self.profile_url,
             "seller_rating": (
                 round(
@@ -73,8 +73,8 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "firstname": self.firstname,
+            "lastname": self.lastname,
             "username": self.username,
             "email": self.email,
             "profile_url": self.profile_url,

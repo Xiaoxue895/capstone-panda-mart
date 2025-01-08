@@ -4,8 +4,8 @@ from sqlalchemy.sql import text
 def seed_users():
     users_data = [
         {
-            "first_name": "Demo",
-            "last_name": "User",
+            "firstname": "Demo",
+            "lastname": "User",
             "username": "Demo",
             "email": "demo@aa.io",
             "password": "password",
@@ -13,8 +13,8 @@ def seed_users():
             "account_balance": 1000.0,
         },
         {
-            "first_name": "Marnie",
-            "last_name": "Smith",
+            "firstname": "Marnie",
+            "lastname": "Smith",
             "username": "marnie",
             "email": "marnie@aa.io",
             "password": "password",
@@ -22,8 +22,8 @@ def seed_users():
             "account_balance": 1200.0,
         },
         {
-            "first_name": "Bobbie",
-            "last_name": "Johnson",
+            "firstname": "Bobbie",
+            "lastname": "Johnson",
             "username": "bobbie",
             "email": "bobbie@aa.io",
             "password": "password",
@@ -31,8 +31,8 @@ def seed_users():
             "account_balance": 800.0,
         },
         {
-            "first_name": "Alice",
-            "last_name": "Wang",
+            "firstname": "Alice",
+            "lastname": "Wang",
             "username": "alice",
             "email": "alice@aa.io",
             "password": "password",
@@ -40,8 +40,8 @@ def seed_users():
             "account_balance": 1500.0,
         },
         {
-            "first_name": "Claire",
-            "last_name": "Brown",
+            "firstname": "Claire",
+            "lastname": "Brown",
             "username": "claire",
             "email": "claire@aa.io",
             "password": "password",
@@ -54,8 +54,8 @@ def seed_users():
     for user_data in users_data:
         user = User(
             username=user_data["username"],
-            first_name=user_data["first_name"],  
-            last_name=user_data["last_name"], 
+            firstname=user_data["firstname"],  
+            lastname=user_data["lastname"], 
             email=user_data["email"],
             password=user_data["password"], 
             profile_url=user_data["profile_url"]
