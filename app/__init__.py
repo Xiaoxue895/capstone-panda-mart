@@ -9,6 +9,7 @@ from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .seeds import seed_commands
 from .config import Config
+from sqlalchemy import text
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
 
@@ -33,6 +34,13 @@ Migrate(app, db)
 
 # Application Security
 CORS(app)
+
+# Set the schema to 'panda_flask_schema' at the start
+@app.before_first_request
+def set_schema():
+    # Make sure to set search_path to 'panda_flask_schema' for every DB connection
+    schema = os.getenv('SCHEMA', 'panda_flask_schema')  # Default to 'panda_flask_schema'
+    db.engine.execute(text(f'SET search_path TO {schema}, public;'))
 
 
 # Since we are deploying with Docker and Flask,
