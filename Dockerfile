@@ -9,6 +9,7 @@ ARG FLASK_ENV
 ARG DATABASE_URL
 ARG SCHEMA
 ARG SECRET_KEY
+ARG DEEPSEEK_API_KEY
 
 WORKDIR /var/www
 
@@ -16,6 +17,7 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 RUN pip install psycopg2
+RUN pip install openai
 
 COPY . .
 
