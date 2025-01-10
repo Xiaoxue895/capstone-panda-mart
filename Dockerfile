@@ -10,6 +10,9 @@ ARG DATABASE_URL
 ARG SCHEMA
 ARG SECRET_KEY
 ARG DEEPSEEK_API_KEY
+ARG S3_BUCKET
+ARG S3_KEY
+ARG S3_SECRET
 
 WORKDIR /var/www
 
@@ -18,6 +21,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN pip install psycopg2
 RUN pip install openai
+RUN pip install boto3
 
 COPY . .
 
