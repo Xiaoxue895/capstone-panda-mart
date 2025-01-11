@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, onupdate=func.now())
 
     products = db.relationship("Product", back_populates="seller")
-    cart = db.relationship("Cart", back_populates="user", cascade="all, delete-orphan")
+    cart = db.relationship("Cart", back_populates="user",uselist=False, cascade="all, delete-orphan")
     users_reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
     favorites = db.relationship("Favorite", back_populates="user", cascade="all, delete-orphan")
 
@@ -39,36 +39,6 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
     
-    def to_dict_seller(self):
-        return {
-            "id": self.id,
-            "username": self.username,
-            "firstname": self.firstname,
-            "lastname": self.lastname,
-            "profile_url": self.profile_url,
-        }
-    
-    def review_count(self):
-        return sum([product.review_count() for product in self.products])
-    
-    def to_dict_with_stats(self):
-        return {
-            "id": self.id,
-            "username": self.username,
-            "firstname": self.firstname,
-            "lastname": self.lastname,
-            "profile_url": self.profile_url,
-            "seller_rating": (
-                round(
-                    sum([product.stars_sum() for product in self.products])
-                    / self.review_count(),
-                    1,
-                )
-                if self.review_count() > 0
-                else "No Reviews"
-            ),
-            "review_count": self.review_count(),
-        }
 
     def to_dict(self):
         return {

@@ -1,7 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .review import Review
 from sqlalchemy import func
-
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -15,7 +13,7 @@ class Product(db.Model):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
     inventory = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
 
@@ -27,46 +25,8 @@ class Product(db.Model):
     favorites = db.relationship("Favorite", back_populates="product", cascade="all, delete-orphan")
     cart_items = db.relationship("CartItem", cascade="all, delete-orphan", back_populates="product")
 
-    def stars_sum(self):
-        sum = (
-            Review.query.with_entities(func.sum(Review.stars).label("sum"))
-            .filter(Review.product_id == self.id)
-            .one()
-        )
-        return sum[0] or 0
-
-    def review_count(self):
-        return len(self.reviews)
-
-    def to_dict_no_seller_info(self):
-        return {
-            "id": self.id,
-            "title": self.name,
-            "description": self.description,
-            "inventory": self.inventory,
-            "price": self.price,
-            "category_id": self.category_id,
-            "seller_id": self.seller_id,
-        }
-
-    def to_dict_with_seller(self):
-        return {
-            "id": self.id,
-            "title": self.title,
-            "description": self.description,
-            "inventory": self.inventory,
-            "price": self.price,
-            "category_id": self.category_id,
-            "seller": self.seller.to_dict(),
-        }
 
     def to_dict(self):
-        preview_image_url = None
-
-        preview_image = list(filter(lambda image: image.preview is True, self.images))
-        if preview_image:
-            preview_image_url = preview_image[0].url
-
         return {
             "id": self.id,
             "name": self.name,
@@ -74,11 +34,8 @@ class Product(db.Model):
             "inventory": self.inventory,
             "price": self.price,
             "category_id": self.category_id,
-            "seller": self.seller.to_dict_with_stats(),
-            "preview_image": preview_image_url,
+            "seller_id": self.seller_id
         }
-
-
 
 
 class ProductImage(db.Model):

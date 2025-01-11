@@ -9,7 +9,7 @@ class Cart(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")),nullable=False,unique=True)
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
 
@@ -35,6 +35,8 @@ class CartItem(db.Model):
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
     quantity = db.Column(db.Integer, default=1)
     gift = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, server_default=func.now())
+    updated_at = db.Column(db.DateTime, onupdate=func.now())
 
     cart = db.relationship("Cart", back_populates="cart_items")
     product = db.relationship("Product", back_populates="cart_items")

@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import SubmitField,IntegerField,BooleanField
-from app.routes.aws_helpers import ALLOWED_EXTENSIONS
+from app.api.aws_helpers import ALLOWED_EXTENSIONS
 from wtforms.validators import DataRequired,NumberRange
 
 class ProductImageForm(FlaskForm):

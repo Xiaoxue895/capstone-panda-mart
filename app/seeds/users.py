@@ -10,7 +10,6 @@ def seed_users():
             "email": "demo@aa.io",
             "password": "password",
             "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            "account_balance": 1000.0,
         },
         {
             "firstname": "Marnie",
@@ -19,7 +18,6 @@ def seed_users():
             "email": "marnie@aa.io",
             "password": "password",
             "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            "account_balance": 1200.0,
         },
         {
             "firstname": "Bobbie",
@@ -28,7 +26,6 @@ def seed_users():
             "email": "bobbie@aa.io",
             "password": "password",
             "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            "account_balance": 800.0,
         },
         {
             "firstname": "Alice",
@@ -37,7 +34,6 @@ def seed_users():
             "email": "alice@aa.io",
             "password": "password",
             "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            "account_balance": 1500.0,
         },
         {
             "firstname": "Claire",
@@ -46,7 +42,6 @@ def seed_users():
             "email": "claire@aa.io",
             "password": "password",
             "profile_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            "account_balance": 950.0,
         },
     ]
 
