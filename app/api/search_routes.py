@@ -2,9 +2,9 @@ from flask import Blueprint,jsonify,request
 from flask_login import login_required,current_user
 from app.models import Product
 
-search_routes = Blueprint('search_routes', __name__)
+search_routes = Blueprint('search', __name__)
 
-@search_routes.route('/search', methods=['GET'])
+@search_routes.route('/', methods=['GET'])
 def search_products():
     wanted_product = request.args.get("input",'').strip()
 
