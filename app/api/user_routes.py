@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from app.models import User,db
+from app.models import User,db,Product,ProductImage,Favorite,Review,Cart,CartItem
+from sqlalchemy.orm import joinedload
 
 user_routes = Blueprint('users', __name__)
 
@@ -21,12 +22,47 @@ def user(id):
     """
     Query for a user by id and returns that user in a dictionary
     """
-    user = User.query.get(id)
+    # Query the user and use joinedload to load the related data
+    user = (
+        User.query.filter_by(id=id)
+        .options(
+            joinedload(User.products).joinedload(Product.category), 
+            joinedload(User.products).joinedload(Product.images)
+        )
+        .first()
+    )
+
     if not user:
         return {'error': 'User not found'}, 404
-    return user.to_dict()
 
-@user_routes.route('/<int:id>',methods=['PUT'])
+    user_data = {
+        "email": user.email,
+        "firstname": user.firstname,
+        "lastname": user.lastname,
+        "id": user.id,
+        "profile_url": user.profile_url,
+        "username": user.username,
+        "products": [
+            {
+                "id": product.id,
+                "name": product.name,
+                "description": product.description,
+                "price": str(product.price),  
+                "inventory": product.inventory,
+                "category": {
+                    "id": product.category.id,
+                    "type": product.category.type,
+                },
+                "preview_image": product.images[0].url if product.images else None  
+            }
+            for product in user.products
+        ]
+    }
+
+    return jsonify(user_data)
+
+
+@user_routes.route('/<int:id>',methods=['PATCH'])
 @login_required
 def update_user(id):
 

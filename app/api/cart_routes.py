@@ -57,7 +57,7 @@ def add_to_cart():
 
 # 6.3 Update an Item in the Cart（for gift）
 # 6.4 change the quantity we save in the cart（what is difference between 6.3-6.4）
-@cart_routes.route('/item/<int:item_id>', methods=['PUT'])
+@cart_routes.route('/item/<int:item_id>', methods=['PATCH'])
 @login_required
 def update_cart_item(item_id):
     data = request.get_json()
