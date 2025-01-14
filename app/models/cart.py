@@ -46,6 +46,10 @@ class CartItem(db.Model):
             "id": self.id,
             "cart_id": self.cart_id,
             "product_id": self.product_id,
+            "name": self.product.name,  
+            "description": self.product.description, 
+            "inventory": self.product.inventory, 
+            "price": self.product.price,  
             "quantity": self.quantity,
-            "gift": self.gift
+            "gift": self.gift,
         }

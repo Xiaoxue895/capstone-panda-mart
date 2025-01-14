@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import db, Cart, CartItem, Product
+from sqlalchemy.orm import joinedload
 
 cart_routes = Blueprint('carts', __name__)
 
@@ -8,13 +9,14 @@ cart_routes = Blueprint('carts', __name__)
 @cart_routes.route('/', methods=['GET'])
 @login_required
 def get_cart():
-    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart = Cart.query.filter_by(user_id=current_user.id).\
+        options(joinedload(Cart.cart_items).joinedload(CartItem.product)).first()
     if not cart:
         return {'error': 'Cart not found'}, 404
     return cart.to_dict()
 
 # 6.2 Add an Item to the Cart
-@cart_routes.route('/item', methods=['POST'])
+@cart_routes.route('/product', methods=['POST'])
 @login_required
 def add_to_cart():
 
@@ -57,13 +59,13 @@ def add_to_cart():
 
 # 6.3 Update an Item in the Cart（for gift）
 # 6.4 change the quantity we save in the cart（what is difference between 6.3-6.4）
-@cart_routes.route('/item/<int:item_id>', methods=['PATCH'])
+@cart_routes.route('/product/<int:product_id>', methods=['PATCH'])
 @login_required
-def update_cart_item(item_id):
+def update_cart_item(product_id):
     data = request.get_json()
     quantity = data.get('quantity')
 
-    cart_item = CartItem.query.get(item_id)
+    cart_item = CartItem.query.get(product_id)
     if not cart_item:
         return {'error': 'Cart item not found'}, 404
 
@@ -85,7 +87,7 @@ def update_cart_item(item_id):
 
 
 # 6.5 Delete all Item from the Cart
-@cart_routes.route('/item', methods=['DELETE'])
+@cart_routes.route('/peoduct', methods=['DELETE'])
 @login_required
 def delete_all_cart_items():
 
@@ -101,11 +103,11 @@ def delete_all_cart_items():
 
 # 6.6 Delete specific Item from the Cart
 
-@cart_routes.route('/item/<int:item_id>', methods=['DELETE'])
+@cart_routes.route('/product/<int:product_id>', methods=['DELETE'])
 @login_required
-def delete_cart_item(item_id):
+def delete_cart_item(product_id):
 
-    cart_item = CartItem.query.get(item_id)
+    cart_item = CartItem.query.get(product_id)
     if not cart_item:
         return {'error': 'Cart item not found'}, 404
 

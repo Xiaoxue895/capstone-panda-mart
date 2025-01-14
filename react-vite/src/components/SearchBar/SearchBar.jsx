@@ -18,7 +18,7 @@ const SearchBar = () => {
 		}
 
 		if (query.trim()) {
-			dispatch(showAllStocksSearchThunk(query));
+			// dispatch(showAllStocksSearchThunk(query));
 			setQuery("");
 		}
 

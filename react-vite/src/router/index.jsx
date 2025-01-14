@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import AiAssistant from '../components/AiAssiatant/AiAssistant';
+import Cart from '../components/CartPage/Cart';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path:"test",
-        element: <AiAssistant />
+        element: <Cart />
       }
     ],
   },
