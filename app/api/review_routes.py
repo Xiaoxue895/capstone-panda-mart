@@ -7,7 +7,7 @@ review_routes = Blueprint("reviews", __name__)
 
 
 # 7.3 Edit a Review
-@review_routes.route("/<int:review_id>", methods=["PUT"])
+@review_routes.route("/<int:review_id>", methods=["PATCH"])
 @login_required
 def update_review(review_id):
     form = ReviewForm()

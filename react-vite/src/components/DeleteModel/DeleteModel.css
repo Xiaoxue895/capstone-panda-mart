@@ -1,0 +1,48 @@
+.confirm_delete {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: auto;
+    text-align: center;
+    margin: auto;
+}
+
+.confirm_delete h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.confirm_delete p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.red_button {
+    background-color: #C0392B;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.red_button:hover {
+    background-color: #C0392B;
+}
+
+.dark_grey_button {
+    background-color: #888;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dark_grey_button:hover {
+    background-color: #666;
+}

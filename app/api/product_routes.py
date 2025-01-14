@@ -16,13 +16,6 @@ def get_all_products():
     products = Product.query.all()
     return {'products':[product.to_dict() for product in products]}
 
-# 2.2 Get all products by specific categroies
-@product_routes.route('/category/<int:category_id>',methods=['GET'])
-def get_products_by_category(categoty_id):
-
-    products = Product.query.filter_by(categoty_id = categoty_id).all()
-    return {'products':[product.to_dict() for product in products]}
-
 
 # 2.2.2 Get all Products owned by the Current User
 @product_routes.route('/user/current', methods=['GET'])
@@ -74,7 +67,7 @@ def create_product():
     
 
 # 2.6 Edit Product by id
-@product_routes.route('/<int:id>', methods=['PUT'])
+@product_routes.route('/<int:id>', methods=['PATCH'])
 @login_required
 def edit_product(id):
     product = Product.query.get(id)
@@ -84,20 +77,16 @@ def edit_product(id):
     if product.seller_id != current_user.id:
         return {'error': 'Permission denied'}, 403
 
-    form = ProductForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+    data = request.get_json()
 
-    if form.validate_on_submit():
-        product.name = form.data['name']
-        product.description = form.data['description']
-        product.inventory = form.data['inventory']
-        product.price = form.data['price']
-        product.category_id = form.data['category_id']
+    product.name = data.get('name', product.name)
+    product.description = data.get('description', product.description)
+    product.inventory = data.get('inventory', product.inventory)
+    product.price = data.get('price', product.price)
+    product.category_id = data.get('category_id', product.category_id)
 
-        db.session.commit()
-        return product.to_dict(), 200  
-    else:
-        return form.errors, 400 
+    db.session.commit()
+    return product.to_dict(), 200  
 
 # 2.7 Delete Product by id
 @product_routes.route('/<int:id>', methods=['DELETE'])
@@ -124,7 +113,7 @@ def get_product_images(product_id):
 # add Images for product
 @product_routes.route('/<int:product_id>/images', methods=["POST"])
 @login_required
-def add_images():
+def add_images(product_id):
     form = ProductImageForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
 
@@ -138,7 +127,7 @@ def add_images():
 
         url = upload["url"]
         new_image = ProductImage(
-            product_id=form.data["product_id"],
+            product_id=product_id,
             url=url,
             preview=form.data["preview"],
         )
@@ -152,30 +141,36 @@ def add_images():
 # Delete an image from a product
 @product_routes.route("/<int:product_id>/images/<int:imageId>", methods=["DELETE"])
 @login_required
-def delete_image(imageId):
+def delete_image(product_id,imageId):
     product_image = ProductImage.query.get(imageId)
+    if not product_image:
+        return {"error": "Image not found"}, 404
+
+    if product_image.product_id != product_id:
+        return {"error": "Image does not belong to this product"}, 400
 
     if product_image:
         remove_file_from_s3(product_image.url)
 
         db.session.delete(product_image)
         db.session.commit()
-        return product_image.to_dict()
+        return {"message": "Image deleted successfully"}, 200
     
 
 # 7.1 Get All Reviews for a Product
-@product_routes.route('/product/<int:product_id>/reviews', methods=['GET'])
+@product_routes.route('/<int:product_id>/reviews', methods=['GET'])
 @login_required
 def get_product_reviews(product_id):
     reviews = Review.query.filter_by(product_id=product_id).all()
+
     if not reviews:
-        return {'error': 'No reviews found for this product'}, 404
+        return {'message': 'No reviews found for this product'}, 200
 
     return jsonify([review.to_dict() for review in reviews])
 
 
 # 7.1.2 get all review stats for a product（like average——stars，total_review)
-@product_routes.route('/product/<int:product_id>/review-stats')
+@product_routes.route('/<int:product_id>/review-stats')
 def get_product_review_stats(product_id):
 
     review = db.session.query(
@@ -198,7 +193,7 @@ def get_product_review_stats(product_id):
 
 
 # 7.2 Get reviews for the current user and specific product
-@product_routes.route('/product/<int:product_id>/current/reviews', methods=['GET'])
+@product_routes.route('/<int:product_id>/current/reviews', methods=['GET'])
 @login_required
 def get_user_review_for_product(product_id):
     review = Review.query.filter_by(user_id=current_user.id, product_id=product_id).first()
@@ -209,14 +204,14 @@ def get_user_review_for_product(product_id):
     return jsonify(review.to_dict())
 
 # 7.2 Add a Review for a Product
-@product_routes.route("/product/<int:product_id>/reviews", methods=["POST"])
+@product_routes.route("/<int:product_id>/reviews", methods=["POST"])
 @login_required
-def create_review():
+def create_review(product_id):
     form = ReviewForm()
 
     form["csrf_token"].data = request.cookies["csrf_token"]
 
-    product_id = form.data["product_id"]
+    product_id = product_id
 
     preRev = (
         Review.query.filter(Review.user_id == current_user.id)
@@ -229,7 +224,7 @@ def create_review():
 
     if form.validate_on_submit():
         new_review = Review(
-            product_id=form.data["productId"],
+            product_id=product_id,
             user_id=current_user.id,
             review=form.data["review"],
             stars=form.data["stars"],

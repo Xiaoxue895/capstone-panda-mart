@@ -27,6 +27,5 @@ class Review(db.Model):
             "user_id": self.user_id,
             "review": self.review,
             "stars": self.stars,
-            "recommendation": self.recommendation,
-            "updated_at": self.updated_at,
+            "recommendation": self.recommendation
         }

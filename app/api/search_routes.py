@@ -32,3 +32,29 @@ def search_products():
         })
 
     return jsonify({'results_list':result_list},200)
+
+# filter product by category
+@search_routes.route('/category/<int:category_id>', methods=['GET'])
+def filter_products_by_category(category_id):
+    products = Product.query.filter_by(category_id=category_id).all()
+
+    if not products:
+        return jsonify({"message": "No products found for this category."}), 404
+
+    result = {
+        "category_id": category_id,
+        "category_type": products[0].category.type if products[0].category else None,
+        "products": []
+    }
+
+    for product in products:
+        result["products"].append({
+            "id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "price": str(product.price),
+            "inventory": product.inventory,
+            "preview_image": next((image.url for image in product.images if image.preview), None)
+        })
+
+    return jsonify(result), 200
