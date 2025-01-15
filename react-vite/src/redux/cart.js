@@ -1,7 +1,8 @@
 // show items in cart; add one thing to cart ;remove one thing from cart
 // edit quantity in cart(update)； clear cart
-
 // if product deleted,what will happen?
+// checked: show, update, remove
+// not sure: clear cart, add to cart
 
 // Action Types
 const SHOW_CART = 'cart/SHOW_CART';

@@ -3,6 +3,8 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import AiAssistant from '../components/AiAssiatant/AiAssistant';
 import Cart from '../components/CartPage/Cart';
+import ProductReviews from '../components/Review/ShowReview'
+import Favorites from '../components/Favorite/Favorite';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -22,8 +24,16 @@ export const router = createBrowserRouter([
         element: <SignupFormPage />,
       },
       {
-        path:"test",
+        path:"testcart",
         element: <Cart />
+      },
+      {
+        path:"testreview",
+        element: <ProductReviews />
+      },
+      {
+        path:"testfav",
+        element: <Favorites />
       }
     ],
   },

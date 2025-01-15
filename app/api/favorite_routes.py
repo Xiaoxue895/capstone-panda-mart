@@ -69,3 +69,19 @@ def remove_from_favorites(favorite_id):
 
     return {"message": "Successfully removed from favorites", "favorite": favorite.to_dict()}, 200
 
+
+@favorite_routes.route('/clear', methods=['DELETE'])
+@login_required
+def clear_all_favorites():
+    favorites = Favorite.query.filter_by(user_id=current_user.id).all()
+
+    if not favorites:
+        return {"error": "No favorites found for this user"}, 404
+
+    for favorite in favorites:
+        db.session.delete(favorite)
+
+    db.session.commit()
+
+    return {"message": "All favorites have been cleared"}, 200
+
