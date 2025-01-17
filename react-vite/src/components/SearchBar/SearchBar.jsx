@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// change this to new redux thing
-// import { showAllStocksSearchThunk } from "../../redux/stock";
+import { showSearchResultsThunk } from "../../redux/product";
 import "./SearchBar.css";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +17,7 @@ const SearchBar = () => {
 		}
 
 		if (query.trim()) {
-			// dispatch(showAllStocksSearchThunk(query));
+			dispatch(showSearchResultsThunk(query));
 			setQuery("");
 		}
 
@@ -35,8 +34,6 @@ const SearchBar = () => {
 					onChange={(e) => setQuery(e.target.value)}
 				/>
 				<button type="submit">search</button>
-
-				{/* when we get the result ,we need redirect to search result page */}
 			</form>
 		</div>
 	);

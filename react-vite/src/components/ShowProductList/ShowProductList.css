@@ -1,0 +1,127 @@
+/* ShowProductList.css */
+
+/* 主页容器 */
+.prod-list {
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+  }
+  
+  /* 网格容器 */
+  .grid_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* 每个商品的单元格 */
+  .grid-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .grid-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* 商品图片容器 */
+  .image_container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* 无图片占位符 */
+  .no-image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #f1f1f1;
+    font-size: 16px;
+    color: #bbb;
+  }
+  
+  /* 商品详情容器 */
+  .product-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+  }
+  
+  /* 商品名称 */
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  /* 商品描述 */
+  .description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    flex-grow: 1;
+  }
+  
+  /* 商品类别 */
+  .category {
+    font-size: 14px;
+    color: #007BFF;
+    margin-bottom: 10px;
+  }
+  
+  /* 卖家名称 */
+  .seller {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  /* 商品价格 */
+  .price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e74c3c;
+    text-align: right;
+  }
+  
+  /* 加载和空商品状态 */
+  .center-in-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 20px;
+    color: #333;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .grid_container {
+      grid-template-columns: 1fr;
+    }
+  
+    .product-details {
+      height: auto;
+    }
+  }
+  

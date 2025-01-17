@@ -34,7 +34,10 @@ class Product(db.Model):
             "inventory": self.inventory,
             "price": self.price,
             "category_id": self.category_id,
-            "seller_id": self.seller_id
+            "category_type": self.category.type if self.category else None,
+            "seller_username": self.seller.username if self.seller else None, 
+            "seller_id": self.seller_id,
+            "images": [image.to_dict() for image in self.images] 
         }
 
 

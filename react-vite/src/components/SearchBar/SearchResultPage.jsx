@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import "./SearchResultPage.css";
 
 const SearchResultPage = () => {
-  const searchResults = useSelector((state) => state.stock.searchResults || []);
+
+  const searchResults = useSelector((state) => state.products.searchResults || []);
 
   return (
     <div className="search-result-container">
@@ -11,11 +12,18 @@ const SearchResultPage = () => {
       <ul className="search-result-list">
         {searchResults.map((product) => (
           <li key={product.id} className="search-result-item">
-            <div>
-              <img src={product.graph_image} alt={`${product.name} graph`} />
-              <h3>{product.name}</h3>
-              <p>Price: ${product.price}</p>
-              <NavLink to={`/products/${product.id}`}>View Details</NavLink>
+            <div className="product-item">
+              <img
+                src={product.preview_image}
+                alt={`${product.name} image`}
+                className="product-image"
+              />
+              
+              <div className="product-info">
+                <h3>{product.name}</h3>
+                <p>Price: ${parseFloat(product.price).toFixed(2)}</p>
+                <NavLink to={`/products/${product.id}`}>View Details</NavLink>
+              </div>
             </div>
           </li>
         ))}
@@ -25,3 +33,4 @@ const SearchResultPage = () => {
 };
 
 export default SearchResultPage;
+

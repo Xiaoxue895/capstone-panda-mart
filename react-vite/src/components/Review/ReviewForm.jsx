@@ -1,79 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { thunkCreateReview, thunkUpdateReview } from '../../redux/review';
+import React, { useState } from 'react';
 
-const ReviewForm = ({ productId, reviewToEdit = null }) => {
-  const dispatch = useDispatch();
+const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
+  const [rating, setRating] = useState(initialData.rating || 5);
+  const [comment, setComment] = useState(initialData.comment || '');
 
-  // Local state for managing form input
-  const [rating, setRating] = useState(reviewToEdit ? reviewToEdit.rating : 0);
-  const [comment, setComment] = useState(reviewToEdit ? reviewToEdit.comment : '');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (reviewToEdit) {
-      // If editing an existing review, populate the form with the review data
-      setRating(reviewToEdit.rating);
-      setComment(reviewToEdit.comment);
-    }
-  }, [reviewToEdit]);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!rating || !comment.trim()) {
-      setError('Please provide both a rating and a comment.');
-      return;
-    }
-
-    const reviewData = {
-      rating,
-      comment,
-    };
-
-    if (reviewToEdit) {
-      // If we're editing a review, dispatch the update action
-      await dispatch(thunkUpdateReview(reviewToEdit.id, reviewData));
-    } else {
-      // Otherwise, dispatch the create action
-      await dispatch(thunkCreateReview(productId, reviewData));
-    }
+    onSubmit({ rating, comment });
+    setRating(5);
+    setComment('');
   };
 
   return (
-    <div>
-      <h2>{reviewToEdit ? 'Edit Your Review' : 'Write a Review'}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="rating">Rating:</label>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>
+          Rating:
           <input
             type="number"
-            id="rating"
-            name="rating"
             min="1"
             max="5"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
           />
-        </div>
-
-        <div>
-          <label htmlFor="comment">Comment:</label>
+        </label>
+      </div>
+      <div>
+        <label>
+          Comment:
           <textarea
-            id="comment"
-            name="comment"
-            rows="4"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-          ></textarea>
-        </div>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-
-        <button type="submit">{reviewToEdit ? 'Update Review' : 'Submit Review'}</button>
-      </form>
-    </div>
+          />
+        </label>
+      </div>
+      <button type="submit">{initialData.id ? 'Update Review' : 'Submit Review'}</button>
+    </form>
   );
 };
 
 export default ReviewForm;
+

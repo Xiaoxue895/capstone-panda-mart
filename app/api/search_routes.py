@@ -4,7 +4,7 @@ from app.models import Product
 
 search_routes = Blueprint('search', __name__)
 
-@search_routes.route('/', methods=['GET'])
+@search_routes.route('/product', methods=['GET'])
 def search_products():
     wanted_product = request.args.get("input",'').strip()
 
@@ -44,17 +44,7 @@ def filter_products_by_category(category_id):
     result = {
         "category_id": category_id,
         "category_type": products[0].category.type if products[0].category else None,
-        "products": []
+        "products": [product.to_dict() for product in products]  
     }
-
-    for product in products:
-        result["products"].append({
-            "id": product.id,
-            "name": product.name,
-            "description": product.description,
-            "price": str(product.price),
-            "inventory": product.inventory,
-            "preview_image": next((image.url for image in product.images if image.preview), None)
-        })
 
     return jsonify(result), 200
