@@ -1,43 +1,57 @@
 import React, { useState } from 'react';
 
 const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
-  const [rating, setRating] = useState(initialData.rating || 5);
-  const [comment, setComment] = useState(initialData.comment || '');
+  const [stars, setStars] = useState(initialData?.stars || 5);
+  const [review, setReview] = useState(initialData?.review || '');
+  const [recommendation, setRecommendation] = useState(initialData?.recommendation || false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ rating, comment });
-    setRating(5);
-    setComment('');
+    onSubmit({ stars, review, recommendation });
+    setStars(5);
+    setReview('');
+    setRecommendation(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>
-          Rating:
+          Stars:
           <input
             type="number"
             min="1"
             max="5"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
+            value={stars}
+            onChange={(e) => setStars(Number(e.target.value))}
           />
         </label>
       </div>
       <div>
         <label>
-          Comment:
+          Review:
           <textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
           />
         </label>
       </div>
-      <button type="submit">{initialData.id ? 'Update Review' : 'Submit Review'}</button>
+      <div>
+        <label>
+          Recommend this product?
+          <input
+            type="checkbox"
+            checked={recommendation}
+            onChange={(e) => setRecommendation(e.target.checked)}
+          />
+        </label>
+      </div>
+      <button type="submit">{initialData?.id ? 'Update Review' : 'Submit Review'}</button>
     </form>
   );
 };
 
 export default ReviewForm;
+
+
 

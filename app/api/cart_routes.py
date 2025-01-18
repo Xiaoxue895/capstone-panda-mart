@@ -87,7 +87,7 @@ def update_cart_item(product_id):
 
 
 # 6.5 Delete all Item from the Cart
-@cart_routes.route('/peoduct', methods=['DELETE'])
+@cart_routes.route('/product', methods=['DELETE'])
 @login_required
 def delete_all_cart_items():
 

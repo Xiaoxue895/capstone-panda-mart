@@ -12,13 +12,13 @@ import ReviewForm from './ReviewForm';
 const ProductReviews = ({ productId }) => {
   const dispatch = useDispatch();
 
-  const reviews = useSelector((state) => state.reviews?.reviews || []);
-  const reviewStats = useSelector((state) => state.reviews?.reviewStats || {
+  const reviews = useSelector((state) => state.review?.reviews || []);
+  const reviewStats = useSelector((state) => state.review?.reviewStats || {
     stars_total: 0,
     review_count: 0,
     average_stars: 0,
   });
-  const userReview = useSelector((state) => state.reviews?.userReview || null);
+  const sessionUser = useSelector((state) => state.session?.user);
 
   const [isEditing, setIsEditing] = useState(false);
   const [reviewToEdit, setReviewToEdit] = useState(null);
@@ -31,7 +31,7 @@ const ProductReviews = ({ productId }) => {
   const handleDeleteReview = async (reviewId) => {
     if (window.confirm('Are you sure you want to delete your review?')) {
       await dispatch(thunkDeleteReview(reviewId, productId));
-      dispatch(thunkGetReviewStats(productId)); 
+      dispatch(thunkGetReviewStats(productId));
     }
   };
 
@@ -48,8 +48,8 @@ const ProductReviews = ({ productId }) => {
     }
     setIsEditing(false);
     setReviewToEdit(null);
-    dispatch(thunkShowReviews(productId)); 
-    dispatch(thunkGetReviewStats(productId)); 
+    dispatch(thunkShowReviews(productId));
+    dispatch(thunkGetReviewStats(productId));
   };
 
   return (
@@ -64,33 +64,49 @@ const ProductReviews = ({ productId }) => {
       </div>
 
       <div>
-        <h3>All Reviews</h3>
-        {reviews.length === 0 ? (
-          <p>No reviews yet. Be the first to review this product!</p>
+        <h3>Your Review</h3>
+        {reviews.some((review) => review.user_id === sessionUser?.id) ? (
+          reviews
+            .filter((review) => review.user_id === sessionUser.id)
+            .map((review) => (
+              <div key={review.id} className="review-item">
+                <p><strong>Stars:</strong> {review.stars} / 5</p>
+                <p><strong>Review:</strong> {review.review}</p>
+                <p><strong>Recommended:</strong> {review.recommendation ? 'Yes' : 'No'}</p>
+                <button onClick={() => handleEditReview(review)}>Edit Review</button>
+                <button onClick={() => handleDeleteReview(review.id)}>Delete Review</button>
+              </div>
+            ))
         ) : (
-          reviews.map((review) => (
+          <p>You haven&apos;t reviewed this product yet. Submit your review below!</p>
+        )}
+      </div>
+
+      <div>
+      <h3>Other Reviews</h3>
+      {reviews.length === 0 || reviews.every((review) => review.user_id === sessionUser?.id) ? (
+        <p>No reviews yet. Be the first to review this product!</p>
+      ) : (
+        reviews
+          .filter((review) => review.user_id !== sessionUser?.id) 
+          .map((review) => (
             <div key={review.id} className="review-item">
               <div>
-                <p><strong>Rating:</strong> {review.rating} / 5</p>
-                <p><strong>Comment:</strong> {review.comment}</p>
-                <p><strong>By:</strong> {review.user.username}</p>
+                <p><strong>Stars:</strong> {review.stars} / 5</p>
+                <p><strong>Review:</strong> {review.review}</p>
+                <p><strong>Recommended:</strong> {review.recommendation ? 'Yes' : 'No'}</p>
+                <p><strong>By:</strong> {review.user_name || 'Anonymous'}</p>
               </div>
-
-              {userReview && review.id === userReview.id && (
-                <div>
-                  <button onClick={() => handleEditReview(review)}>Edit Review</button>
-                  <button onClick={() => handleDeleteReview(review.id)}>Delete Review</button>
-                </div>
-              )}
             </div>
           ))
         )}
       </div>
 
+
       <div>
         <ReviewForm
           productId={productId}
-          initialData={reviewToEdit}
+          initialData={reviewToEdit || {}}
           onSubmit={handleReviewSubmit}
         />
       </div>
@@ -99,4 +115,7 @@ const ProductReviews = ({ productId }) => {
 };
 
 export default ProductReviews;
+
+
+
 

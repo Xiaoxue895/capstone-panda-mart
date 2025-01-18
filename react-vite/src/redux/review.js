@@ -141,9 +141,9 @@ export const thunkShowReviews = (productId) => async (dispatch) => {
   const reviewReducer = (state = initialState, action) => {
     switch (action.type) {
       case SHOW_REVIEWS:
-        return { ...state, reviews: action.payload };
+        return { ...state, reviews: action.payload.reviews }; 
       case SHOW_REVIEW_STATS:
-        return { ...state, reviewStats: action.payload };
+        return { ...state, reviewStats: action.payload.stats }; 
       case SHOW_USER_REVIEW:
         return { ...state, userReview: action.payload };
       case CREATE_REVIEW:
@@ -158,11 +158,14 @@ export const thunkShowReviews = (productId) => async (dispatch) => {
       case DELETE_REVIEW:
         return {
           ...state,
-          reviews: state.reviews.filter((review) => review.id !== action.payload),
+          reviews: state.reviews.filter((review) => review.id !== action.payload.reviewId), // 修复：正确使用 reviewId
         };
+      case 'reviews/SET_ERROR':
+        return { ...state, error: action.payload }; 
       default:
         return state;
     }
   };
+
+ export default reviewReducer;
   
-  export default reviewReducer;

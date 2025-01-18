@@ -25,6 +25,7 @@ class Review(db.Model):
             "id": self.id,
             "product_id": self.product_id,
             "user_id": self.user_id,
+            "user_name": self.user.username if self.user else None, 
             "review": self.review,
             "stars": self.stars,
             "recommendation": self.recommendation

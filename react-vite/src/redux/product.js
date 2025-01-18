@@ -59,14 +59,14 @@ const deleteProduct = (productId) => ({
   productId,
 });
 
-const addImage = (image) => ({
+const addImage = (image,productId) => ({
   type: ADD_IMAGE,
-  image,
+  payload: image,productId
 });
 
-const deleteImage = (imageId) => ({
+const deleteImage = (image) => ({
   type: DELETE_IMAGE,
-  imageId,
+  image,
 });
 
 // Thunks
@@ -121,14 +121,15 @@ export const showProductsByCategoryThunk = (categoryId) => async (dispatch) => {
 };
 
 export const createProductThunk = (productData) => async (dispatch) => {
-  const response = await fetch("/api/products", {
+  const response = await fetch("/api/products/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(productData),
   });
   if (response.ok) {
-    const data = await response.json();
-    dispatch(createProduct(data));
+    const result = await response.json();
+    dispatch(createProduct(result));
+    return result;
   }
 };
 
@@ -153,23 +154,35 @@ export const deleteProductThunk = (id) => async (dispatch) => {
   }
 };
 
-export const addImageThunk = (productId, imageData) => async (dispatch) => {
-  const response = await fetch(`/api/products/${productId}/images`, {
+
+export const addProductImageThunk = (formData,productId) => async (dispatch) => {
+  const response = await fetch(`/api/products/${productId}/images/new`, {
     method: "POST",
-    body: imageData,
+    // headers: { "Content-Type": "multipart/form-data" },
+    body: formData,
   });
+
   if (response.ok) {
-    const data = await response.json();
-    dispatch(addImage(data));
+    const newImage = await response.json();
+    dispatch(addImage(newImage));
+    return newImage;
+  } else {
+    const error = await response.json();
+    console.log('ERROR', error);
+    throw error;
   }
 };
 
-export const deleteImageThunk = (productId, imageId) => async (dispatch) => {
+export const deleteImageThunk = (image) => async (dispatch) => {
   const response = await fetch(`/api/products/${productId}/images/${imageId}`, {
     method: "DELETE",
   });
+
   if (response.ok) {
-    dispatch(deleteImage(imageId));
+    dispatch(deleteImage(image));
+  } else {
+    const error = await response.json();
+    throw new Error(error.message);
   }
 };
 
@@ -216,14 +229,22 @@ const productReducer = (state = initialState, action) => {
         allProducts: state.allProducts.filter((product) => product.id !== action.productId) 
       };
 
-    case ADD_IMAGE:
-      return {
-        ...state,
-        productDetails: {
-          ...state.productDetails,
-          images: [...(state.productDetails.images || []), action.image],
-        },
-      };
+      case ADD_IMAGE: {
+        const { product_id, ...imageData } = action.payload;
+      
+        return {
+          ...state,
+          productDetails: {
+            ...state.productDetails,
+            images: [...(state.productDetails.images || []), imageData],
+          },
+          allProducts: state.allProducts.map((product) =>
+            product.id === product_id
+              ? { ...product, images: [...(product.images || []), imageData] }
+              : product
+          ),
+        };
+      }
 
     case DELETE_IMAGE:
       return {
@@ -231,9 +252,17 @@ const productReducer = (state = initialState, action) => {
         productDetails: {
           ...state.productDetails,
           images: (state.productDetails.images || []).filter(
-            (image) => image.id !== action.imageId
+            (image) => image.id !== action.image.id
           ),
         },
+        allProducts: state.allProducts.map((product) =>
+          product.id === action.image.productId
+            ? {
+                ...product,
+                images: (product.images || []).filter((image) => image.id !== action.image.id),
+              }
+            : product
+        ),
       };
 
     default:
@@ -242,3 +271,4 @@ const productReducer = (state = initialState, action) => {
 };
 
 export default productReducer;
+

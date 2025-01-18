@@ -6,6 +6,7 @@ from ..forms import ProductForm,ProductImageForm,ReviewForm
 from .aws_helpers import get_unique_filename,upload_file_to_s3,remove_file_from_s3
 from sqlalchemy import func
 
+
 product_routes = Blueprint('products',__name__)
 
 # 2.1 Get all Products
@@ -111,46 +112,61 @@ def get_product_images(product_id):
     return jsonify({image.id: image.to_dict() for image in images})
 
 # add Images for product
-@product_routes.route('/<int:product_id>/images', methods=["POST"])
+@product_routes.route('/<int:product_id>/images/new', methods=["POST"])
 @login_required
 def add_images(product_id):
-    form = ProductImageForm()
-    form["csrf_token"].data = request.cookies["csrf_token"]
+    form_data = request.form  
+    file_data = request.files 
 
-    if form.validate_on_submit():
-        image = form.data["image"]
-        image.filename = get_unique_filename(image.filename)
-        upload = upload_file_to_s3(image)
+    product = Product.query.get(product_id)
+    if not product:
+        return {"errors": "Product not found"}, 404
 
-        if "url" not in upload:
-            return {"errors": upload}, 400
+    product_id_from_request = int(form_data.get("product_id"))
+    preview = form_data.get("preview", False)
+    image = file_data.get("image")
 
-        url = upload["url"]
-        new_image = ProductImage(
-            product_id=product_id,
-            url=url,
-            preview=form.data["preview"],
-        )
+    # if not product_id_from_request or not image:
+    #     return {"errors": "Missing required fields"}, 400
+    
+    preview = form_data.get("preview", "false").lower() == "true"
+
+    # if int(product_id_from_request) != int(product_id):
+    #     return {"errors": "Product ID mismatch"}, 400
+
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+
+    if "url" not in upload:
+        return {"errors": upload}, 400
+
+    image_url = upload["url"]
+
+    new_image = ProductImage(
+        product_id=product_id_from_request,
+        image=image_url,
+        preview=preview,
+    )
+
+    try:
         db.session.add(new_image)
         db.session.commit()
-        return new_image.to_dict(), 201
-    else:
-        print("Form errors:", form.errors)
-        return form.errors, 400
+    except Exception as e:
+        db.session.rollback()
+        return {"errors": f"Failed to add image: {str(e)}"}, 500
+
+    return new_image.to_dict(), 201
     
 # Delete an image from a product
 @product_routes.route("/<int:product_id>/images/<int:imageId>", methods=["DELETE"])
 @login_required
-def delete_image(product_id,imageId):
+def delete_image(imageId):
     product_image = ProductImage.query.get(imageId)
     if not product_image:
         return {"error": "Image not found"}, 404
 
-    if product_image.product_id != product_id:
-        return {"error": "Image does not belong to this product"}, 400
-
     if product_image:
-        remove_file_from_s3(product_image.url)
+        remove_file_from_s3(product_image.image)
 
         db.session.delete(product_image)
         db.session.commit()

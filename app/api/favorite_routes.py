@@ -25,7 +25,7 @@ def get_all_favorites():
                 "favorite_id": favorite.id,
                 "product": {
                     **product.to_dict(),
-                    "preview_image": preview_image.url if preview_image else None
+                    "preview_image": preview_image.image if preview_image else None
                 }
             })
 

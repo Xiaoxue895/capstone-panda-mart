@@ -15,7 +15,7 @@ import {showProductDetailsThunk} from "../../redux/product";
 import {thunkAddFavorite} from "../../redux/favorite";
 import {thunkAddToCart} from "../../redux/cart"
 
-// import ShowReview from "../Review/ShowReview";
+import ShowReview from "../Review/ShowReview";
 import "./ShowProductDetail.css";
 
 function ShowProductDetails() {
@@ -107,9 +107,9 @@ function ShowProductDetails() {
           <button onClick={handleAddToFavorite}>Add to Favorites</button>
         </div>
   
-        {/* <div className="product-reviews">
+        <div className="product-reviews">
           <ShowReview productId={productId} />
-        </div> */}
+        </div>
       </div>
     );
   }

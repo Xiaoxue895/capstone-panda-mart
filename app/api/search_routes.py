@@ -28,7 +28,7 @@ def search_products():
             "inventory": product.inventory,
             "category_id": product.category_id,
             "category_type": product.category.type if product.category else None, 
-            "preview_image": next((image.url for image in product.images if image.preview), None)
+            "preview_image": next((image.image for image in product.images if image.preview), None)
         })
 
     return jsonify({'results_list':result_list},200)

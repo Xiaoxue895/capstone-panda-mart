@@ -49,7 +49,7 @@ class ProductImage(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
-    url = db.Column(db.Text, nullable=False)
+    image = db.Column(db.Text, nullable=False)
     preview = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, onupdate=func.now())
@@ -60,7 +60,7 @@ class ProductImage(db.Model):
         return {
             "id": self.id,
             "product_id": self.product_id,
-            "url": self.url,
+            "image": self.image,
             "preview": self.preview
         }
 
