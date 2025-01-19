@@ -66,7 +66,7 @@ const ShowProductList = () => {
                   )}
                 </div>
 
-                <div className="product-details">
+                <div className="product-details-mainpage">
                   <p className="name">{product.name}</p>
                   {/* <p className="description">{product.description}</p> */}
                   <p className="category">

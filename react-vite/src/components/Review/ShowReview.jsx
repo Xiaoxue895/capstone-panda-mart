@@ -86,15 +86,14 @@ const ProductReviews = ({ productId }) => {
   };
 
   return (
-    <div>
+    <div className='review-bar'>
       <h2>Product Reviews</h2>
 
       <div>
-        <h3>Review Stats</h3>
-        <p>Total Reviews: {reviewStats.review_count}</p>
-        <p>Average Rating: {reviewStats.average_stars.toFixed(1)}</p>
-        <p>Total Stars: {reviewStats.stars_total}</p>
-      </div>
+      <h3>Review Stats</h3>
+      <p>Total Reviews: {reviewStats.review_count}</p>
+      <p>Average Rating: {(typeof reviewStats.average_stars === 'number' ? reviewStats.average_stars : 0).toFixed(1)}</p>
+    </div>
 
       <div>
         <h3>Your Review</h3>

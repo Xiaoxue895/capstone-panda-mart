@@ -16,6 +16,7 @@ import {thunkAddFavorite} from "../../redux/favorite";
 import {thunkAddToCart} from "../../redux/cart"
 
 import ShowReview from "../Review/ShowReview";
+import ProductImage from "./ShowProductImage";
 import "./ShowProductDetail.css";
 
 function ShowProductDetails() {
@@ -53,6 +54,12 @@ function ShowProductDetails() {
       <div className="product-details-container">
         <div className="product-info">
           <h1>{product.name}</h1>
+        </div>
+        <div className="product-image">
+        <ProductImage />
+        </div>
+        <div className="product-manage">
+        <div className="product-description">
           <p>{product.description}</p>
           <p>
             <strong>Price:</strong> ${parseFloat(product.price).toFixed(2)}
@@ -66,35 +73,10 @@ function ShowProductDetails() {
           <p>
             <strong>Seller:</strong> {product.seller_username}
           </p>
-  
-          {/* <div className="product-images">
-            {product.images.map((image) => (
-              <img
-                key={image.id}
-                src={`/${image.url}`}
-                alt={`Product Image ${image.id}`}
-                className={image.preview ? "preview-image" : "thumbnail-image"}
-              />
-            ))}
-          </div> */}
+        </div>
 
-          <div className="product-images">
-            {product.images.map((image) => {
-              const imageUrl = image.image && typeof image.image === 'string' && image.image.startsWith("http")
-                ? image.image  
-                : `/${image.image}`;  
-              return (
-                <img
-                  key={image.id}
-                  src={imageUrl}
-                  alt={`Product Image ${image.id}`}
-                  className={image.preview ? "preview-image" : "thumbnail-image"}
-                />
-              );
-            })}
-          </div>
-
-          <div className="cart-controls">
+          <div className="add-to-cart">
+            <div className="cart-controls">
             <label>
               Quantity:
               <input
@@ -119,8 +101,11 @@ function ShowProductDetails() {
               Add to Cart
             </button>
           </div>
-  
+        </div>
+
+        <div className="favorite-button">
           <button onClick={handleAddToFavorite}>Add to Favorites</button>
+        </div>
         </div>
   
         <div className="product-reviews">

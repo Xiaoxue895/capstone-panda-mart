@@ -6,7 +6,7 @@ function Navigation() {
   return (
     <ul>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">Panda Mart</NavLink>
       </li>
 
       <li>

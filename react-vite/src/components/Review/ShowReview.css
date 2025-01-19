@@ -1,0 +1,137 @@
+/* ShowReview.css */
+
+/* General Container */
+.review-bar {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.review-bar h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.review-bar h3 {
+  font-size: 22px;
+  color: #555;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 4px;
+}
+
+/* Review Stats */
+.review-bar p {
+  font-size: 16px;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Review Item Container */
+.review-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #fafafa;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.review-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Strong Text */
+.review-item strong {
+  color: #333;
+}
+
+/* Buttons */
+button {
+  padding: 8px 16px;
+  margin: 8px 4px 0 0;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Review Form */
+.review-bar form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.review-bar form label {
+  font-size: 16px;
+  color: #555;
+}
+
+.review-bar form input[type="text"],
+.review-bar form input[type="number"],
+.review-bar form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.review-bar form input[type="number"] {
+  max-width: 80px;
+}
+
+.review-bar form textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+/* Submit Button */
+.review-bar form button {
+  align-self: flex-start;
+  background-color: #28a745;
+}
+
+.review-bar form button:hover {
+  background-color: #218838;
+}
+
+/* Modal Styling */
+.modal-content {
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content button {
+  margin-top: 10px;
+}
+
+  
