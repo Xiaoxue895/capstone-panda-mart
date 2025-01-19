@@ -14,7 +14,6 @@ ARG S3_BUCKET
 ARG S3_KEY
 ARG S3_SECRET
 
-ENV SCHEMA=${SCHEMA:-public}
 
 WORKDIR /var/www
 
@@ -28,8 +27,8 @@ RUN pip install boto3
 COPY . .
 
 
-# RUN flask db init
-# RUN flask db migrate -m "Initial migration"
+RUN flask db init
+RUN flask db migrate -m "Initial migration"
 RUN flask db upgrade
 RUN flask seed all
 CMD gunicorn app:app
