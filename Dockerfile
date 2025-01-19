@@ -14,6 +14,8 @@ ARG S3_BUCKET
 ARG S3_KEY
 ARG S3_SECRET
 
+ENV SCHEMA=${SCHEMA:-public}
+
 WORKDIR /var/www
 
 COPY requirements.txt .
