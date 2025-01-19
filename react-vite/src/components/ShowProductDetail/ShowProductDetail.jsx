@@ -67,7 +67,7 @@ function ShowProductDetails() {
             <strong>Seller:</strong> {product.seller_username}
           </p>
   
-          <div className="product-images">
+          {/* <div className="product-images">
             {product.images.map((image) => (
               <img
                 key={image.id}
@@ -76,8 +76,24 @@ function ShowProductDetails() {
                 className={image.preview ? "preview-image" : "thumbnail-image"}
               />
             ))}
+          </div> */}
+
+          <div className="product-images">
+            {product.images.map((image) => {
+              const imageUrl = image.image && typeof image.image === 'string' && image.image.startsWith("http")
+                ? image.image  
+                : `/${image.image}`;  
+              return (
+                <img
+                  key={image.id}
+                  src={imageUrl}
+                  alt={`Product Image ${image.id}`}
+                  className={image.preview ? "preview-image" : "thumbnail-image"}
+                />
+              );
+            })}
           </div>
-  
+
           <div className="cart-controls">
             <label>
               Quantity:

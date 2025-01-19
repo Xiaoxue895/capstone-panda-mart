@@ -1,9 +1,10 @@
+
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { showProductsByCategoryThunk } from "../../redux/product"; 
 import { Link } from "react-router-dom";
-// import "./CategoryProduct.css";
+import "./CategoryProduct.css";
 
 const CategoryProductPage = () => {
   const { categoryId } = useParams(); 
@@ -30,10 +31,11 @@ const CategoryProductPage = () => {
       <h1>Category Products</h1>
       <div className="product-list">
         {categoryData.map((product) => {
-          // Get the preview image for the product
-          const previewImage = product.images.find(image => image.preview)?.url;
-          const imageUrl = previewImage ? `/${previewImage}` : undefined;
-          
+          const previewImage = product.images.find(image => image.preview)?.image;
+          const imageUrl = previewImage && typeof previewImage === 'string' && previewImage.startsWith("http")
+            ? previewImage 
+            : `/${previewImage}`;  
+
           return (
             <div key={product.id} className="product-item">
               <Link to={`/products/${product.id}`} className="product-link">
@@ -53,6 +55,7 @@ const CategoryProductPage = () => {
                   <p className="product-price">
                     ${parseFloat(product.price).toFixed(2)}
                   </p>
+                  <p className="product-des">{product.description}</p>
                 </div>
               </Link>
             </div>
@@ -64,3 +67,4 @@ const CategoryProductPage = () => {
 };
 
 export default CategoryProductPage;
+

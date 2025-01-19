@@ -6,12 +6,13 @@ import Cart from '../components/CartPage/Cart';
 import ProductReviews from '../components/Review/ShowReview'
 import Favorites from '../components/Favorite/Favorite';
 import CreateProductForm from '../components/ManageProduct/CreateProduct'
-// import ManageProduct from '../components/ManageProduct/ManageProduct'
-// import UpdateProduct from '../components/ManageProduct/UpdateProduct'
+import ManageProductForm from '../components/ManageProduct/ManageProduct'
 import ShowProductList from '../components/ShowProductList/ShowProductlist'
 import SearchResultPage from '../components/SearchBar/SearchResultPage';
 import CategoryProductPage from '../components/SearchCategory/CategoryProduct';
 import ShowProductDetails from '../components/ShowProductDetail/ShowProductDetail';
+import UserProfile from '../components/UserProfile/UserProfile';
+
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -20,7 +21,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <ShowProductList />,
       },
       {
         path: "login",
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
         element: <SignupFormPage />,
       },
       {
-        path:"testcart",
+        path:"cart",
         element: <Cart />
       },
       {
@@ -39,17 +40,21 @@ export const router = createBrowserRouter([
         element: <ProductReviews />
       },
       {
-        path:"testfav",
+        path:"favorites",
         element: <Favorites />
       },
       {
-        path:"testcreate",
-        element: <CreateProductForm />
+        path:"products/:productId/update",
+        element: <ManageProductForm />
       },
       {
-        path:"testshowlist",
-        element: <ShowProductList />
+        path:"products/create",
+        element: <CreateProductForm />
       },
+      // {
+      //   path:"testshowlist",
+      //   element: <ShowProductList />
+      // },
       {
         path:"searchres",
         element: <SearchResultPage />
@@ -61,6 +66,10 @@ export const router = createBrowserRouter([
       {
         path:"/products/:productId",
         element: <ShowProductDetails />
+      },
+      {
+        path:"/userhome",
+        element: <UserProfile />
       },
       // {
       //   path:"testupdate",

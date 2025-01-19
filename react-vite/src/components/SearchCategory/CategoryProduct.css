@@ -1,0 +1,113 @@
+/* CategoryProduct.css */
+
+/* Main container for the category page */
+.category-products {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Heading of the page */
+  .category-products h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Center the loading message */
+  .center-in-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Container for the list of products */
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Each individual product container */
+  .product-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for product items */
+  .product-item:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Link to the individual product page */
+  .product-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Image container for the product */
+  .image-container {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Product image styling */
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Fallback when no image is available */
+  .no-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 1.2rem;
+    color: #999;
+    background-color: #e0e0e0;
+  }
+  
+  /* Product details container */
+  .product-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+  }
+  
+  /* Product name styling */
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Product price styling */
+  .product-price {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Media query for mobile responsiveness */
+  @media (max-width: 768px) {
+    .category-products {
+      padding: 10px;
+    }
+  
+    .product-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  

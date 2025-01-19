@@ -142,6 +142,7 @@ export const updateProductThunk = (id, productData) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(updateProduct(data));
+    return data
   }
 };
 
