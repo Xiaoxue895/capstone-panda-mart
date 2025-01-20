@@ -25,7 +25,7 @@ function Footer() {
         </div>
         <div className="inspiration">
           <p>
-          My English name is inspired by Alice in Wonderland, and Panda Mart is like an online Chinese supermarket. Just as Chinese supermarkets are popular here, e-commerce platforms should also embrace a Chinese-style presence.
+          My English name is inspired by Alice in Wonderland, and Panda Mart is  an online Chinese supermarket. Just as Chinese supermarkets are popular here, e-commerce platforms should also embrace a Chinese-style presence.
           </p>
         </div>
       </div>
