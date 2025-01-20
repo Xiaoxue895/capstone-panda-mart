@@ -25,12 +25,12 @@ a {
 }
 
 a:hover {
-  color: #007bff; /* Highlight color on hover */
+  color: goldenrod; /* Highlight color on hover */
 }
 
 /* Profile button styling */
-.ProfileButton {
-  background-color: #007bff;
+.Sidebar {
+  background-color: goldenrod;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -40,10 +40,10 @@ a:hover {
   transition: background-color 0.3s ease;
 }
 
-.ProfileButton:hover {
-  background-color: #0056b3; /* Darken on hover */
+.Sidebar:hover {
+  background-color: goldenrod; /* Darken on hover */
 }
 
-.ProfileButton:focus {
+.Sidebar:focus {
   outline: none; /* Remove focus outline */
 }

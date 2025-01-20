@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaMagic } from "react-icons/fa";
-// import "./AiAssistant.css";
+import "./AiAssistant.css";
 
 function AIAssistant() {
 	const [query, setQuery] = useState("");
@@ -45,9 +45,8 @@ function AIAssistant() {
 
 	return (
 		<div className="ai-container">
-			<h2>
-				<FaMagic /> AI Assistant
-			</h2>
+			<h2><FaMagic /> AI Assistant</h2>
+			<p>Consult an AI assistant for better product management</p>
 
 			<div className="chat-window">
 				{chatHistory.map((msg, idx) => (

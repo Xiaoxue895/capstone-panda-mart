@@ -1,0 +1,66 @@
+/* Sidebar Styles */
+.sidebar-toggle {
+
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    color: goldenrod;
+    cursor: pointer;
+  }
+
+  .sidebar-toggle:hover {
+    color: goldenrod; 
+    background: transparent; 
+  }
+  
+  .sidebar-toggle:active {
+    background: transparent;
+   }
+  
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right:0;
+    width: 250px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+  }
+  
+  .sidebar .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .sidebar-item {
+    margin: 20px 0;
+    font-size: 1.2rem;
+  }
+  
+  .sidebar-item button,
+  .sidebar-item a {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .sidebar-item a:hover {
+    color: goldenrod;
+  }
+  

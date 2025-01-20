@@ -17,7 +17,7 @@ def get_stock_recommendations():
     data = request.json
     user_query = data.get('query', '')
 
-    user_query = "I would like to inquire about information in the stock consulting field. Please provide a concise and clear answer of around 100 words. Here is my question:" + user_query
+    user_query = "I am a seller managing store products on an e-commerce platform. I may ask questions about how to improve product sales. Please provide concise answers, no more than 100 words.Here is my question:" + user_query
 
     try:
         response = client.chat.completions.create(

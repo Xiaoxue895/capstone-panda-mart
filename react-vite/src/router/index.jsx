@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
-import AiAssistant from '../components/AiAssiatant/AiAssistant';
 import Cart from '../components/CartPage/Cart';
 import ProductReviews from '../components/Review/ShowReview'
 import Favorites from '../components/Favorite/Favorite';
@@ -51,10 +50,6 @@ export const router = createBrowserRouter([
         path:"products/create",
         element: <CreateProductForm />
       },
-      // {
-      //   path:"testshowlist",
-      //   element: <ShowProductList />
-      // },
       {
         path:"searchres",
         element: <SearchResultPage />
@@ -70,15 +65,7 @@ export const router = createBrowserRouter([
       {
         path:"/userhome",
         element: <UserProfile />
-      },
-      // {
-      //   path:"testupdate",
-      //   element: <UpdateProduct />
-      // },
-      // {
-      //   path:"testmanage",
-      //   element: <ManageProduct />
-      // }
+      }
     ],
   },
 ]);

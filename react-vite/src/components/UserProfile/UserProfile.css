@@ -1,139 +1,157 @@
-/* UserProfile.css */
-
 .user-profile {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .profile-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .user-info h2 {
-    font-size: 1.8rem;
-    margin: 0;
-  }
-  
-  .user-info p {
-    font-size: 1rem;
-    color: #555;
-  }
-  .user-navigation {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px; /* Adjust gap between buttons */
-  }
-  
-  .nav-button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: goldenrod;
-    text-decoration: none;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-    width: 200px; /* Set a fixed width for buttons */
-    text-align: center;
-    box-sizing: border-box;
-  }
-  
-  .nav-button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-  }
-  
-  .user-products h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  
-  .product-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .image-container {
-    height: 200px;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .product-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-  
-  .no-image-placeholder {
-    color: #888;
-    font-size: 1.2rem;
-  }
-  
-  .manage-product-details {
-    padding: 10px;
-  }
-  
-  .manage-product-details h4 {
-    font-size: 1.3rem;
-    margin: 0;
-    margin-bottom: 3px;
-  }
-  
-  .manage-product-details p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 5px;
-  }
-  
-  .product-actions {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-  }
-  
-  .product-actions button {
-    padding: 8px 12px;
-    background-color: gray;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    width: 48%;
-  }
-  
-  .product-actions button:nth-child(2) {
-    background-color: rgb(175, 164, 100);
-  }
-  
-  .product-actions button:hover {
-    opacity: 0.8;
-  }
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start; 
+}
+
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.user-info p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.user-navigation {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px; 
+}
+
+.nav-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: goldenrod;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  width: 200px; 
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nav-button:hover {
+  background-color: transparent; 
+}
+
+
+.user-products {
+  flex: 2; 
+}
+
+.user-products h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.image-container {
+  height: 200px;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.no-image-placeholder {
+  color: #888;
+  font-size: 1.2rem;
+}
+
+.manage-product-details {
+  padding: 10px;
+}
+
+.manage-product-details h4 {
+  font-size: 1.3rem;
+  margin: 0;
+  margin-bottom: 3px;
+}
+
+.manage-product-details p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.product-actions button {
+  padding: 8px 12px;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 48%;
+}
+
+.product-actions button:nth-child(2) {
+  background-color: goldenrod;
+}
+
+.product-actions button:hover {
+  opacity: 0.8;
+}
+
+
+.ai-assistant {
+  flex: 1; 
+
+}
+
   
   
 

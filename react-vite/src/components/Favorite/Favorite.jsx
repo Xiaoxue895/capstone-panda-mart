@@ -38,19 +38,26 @@ const Favorites = () => {
               <div key={favorite.favorite_id} className="favorite-item">
                 <div className="favorite-product">
                   <div 
-                    className={`heart-icon ${favorite.product.is_favorite ? 'filled' : ''}`}
+                    className={`heart-icon ${favorite.product? 'filled' : ''}`}
                     onClick={() => handleRemoveFavorite(favorite.favorite_id)}
                   >
                     ❤️
                   </div>
-                  <img
-                    src={favorite.product.preview_image || 'default-image-url.jpg'}
-                    alt={favorite.product.name}
-                    className="product-preview"
-                  />
+                  {favorite.product && favorite.product.preview_image && (
+                    <img
+                      src={
+                        favorite.product.preview_image.startsWith('http')
+                          ? favorite.product.preview_image
+                          : `/${favorite.product.preview_image}`
+                      }
+                      alt={favorite.product.name}
+                      className="product-preview"
+                    />
+                  )}
+                  
                   <div className="product-details">
-                    <h3>{favorite.product.name}</h3>
-                    <p>{favorite.product.description}</p>
+                    <h3>{favorite.product ? favorite.product.name : 'Unknown Product'}</h3>
+                    <p>{favorite.product ? favorite.product.description : 'No description available'}</p>
                   </div>
                 </div>
               </div>

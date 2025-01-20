@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkShowCart, thunkRemoveFromCart, thunkClearCart, thunkUpdateItemQuantity } from '../../redux/cart';
+import './Cart.css'
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const Cart = () => {
               <th>Price</th>
               <th>Quantity</th>
               <th>Total</th>
-              <th>Actions</th>
+              <th>Delete product</th>
             </tr>
           </thead>
           <tbody>
