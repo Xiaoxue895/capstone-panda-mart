@@ -11,7 +11,6 @@ product_routes = Blueprint('products',__name__)
 
 # 2.1 Get all Products
 @product_routes.route('/',methods=['GET'])
-@login_required
 def get_all_products():
 
     products = Product.query.all()
