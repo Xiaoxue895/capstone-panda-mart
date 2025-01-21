@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
   const [stars, setStars] = useState(initialData?.stars || 5);
   const [review, setReview] = useState(initialData?.review || '');
   const [recommendation, setRecommendation] = useState(initialData?.recommendation || false);
+
+  useEffect(() => {
+    setStars(initialData?.stars || 5);
+    setReview(initialData?.review || '');
+    setRecommendation(initialData?.recommendation || false);
+  }, [initialData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,6 +58,7 @@ const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
 };
 
 export default ReviewForm;
+
 
 
 
