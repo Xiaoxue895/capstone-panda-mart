@@ -1,6 +1,6 @@
 
 
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { showProductsThunk } from "../../redux/product"; 
@@ -11,13 +11,20 @@ import "./ShowProductList.css";
 const ShowProductList = () => {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(true);
+
   const products = useSelector((state) => state.products?.allProducts || []);
 
   useEffect(() => {
-    dispatch(showProductsThunk());
+    const fetchProducts = async () => {
+      await dispatch(showProductsThunk());
+      setLoading(false); 
+    };
+    
+    fetchProducts();
   }, [dispatch]);
 
-  if (!products) {
+  if (loading) {
     return (
       <main>
         <div className="center-in-page">
@@ -27,7 +34,7 @@ const ShowProductList = () => {
     );
   }
 
-  if (products.length === 0) {
+  if (!products || products.length === 0) {
     return (
       <main>
         <div className="center-in-page">
@@ -68,7 +75,6 @@ const ShowProductList = () => {
 
                 <div className="product-details-mainpage">
                   <p className="name">{product.name}</p>
-                  {/* <p className="description">{product.description}</p> */}
                   <p className="category">
                     <strong>Category:</strong> {product.category_type}
                   </p>
