@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   thunkShowReviews,
-  thunkGetReviewStats,
   thunkDeleteReview,
   thunkCreateReview,
   thunkUpdateReview,
@@ -15,15 +14,7 @@ const ProductReviews = ({ productId }) => {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal(); 
 
-  // 获取评论列表
-  const reviews = useSelector((state) => state.review?.reviews || []);
-
-  // 获取评论统计信息
-  const reviewStats = useSelector((state) => state.review?.reviewStats || {
-    stars_total: 0,
-    review_count: 0,
-    average_stars: 0,
-  });
+  const reviews = useSelector((state) => Array.isArray(state.review?.reviews) ? state.review.reviews : []);
 
   const sessionUser = useSelector((state) => state.session?.user);
 
@@ -32,10 +23,8 @@ const ProductReviews = ({ productId }) => {
 
   useEffect(() => {
     dispatch(thunkShowReviews(productId));
-    dispatch(thunkGetReviewStats(productId));  // 确保获取评论统计数据
   }, [dispatch, productId]);
 
-  // 删除评论
   const handleDeleteReview = async (reviewId) => {
     setModalContent(
       <div>
@@ -43,7 +32,6 @@ const ProductReviews = ({ productId }) => {
         <button
           onClick={async () => {
             await dispatch(thunkDeleteReview(reviewId, productId));
-            dispatch(thunkGetReviewStats(productId));  // 删除后更新评论统计
             closeModal(); 
           }}
         >
@@ -54,7 +42,6 @@ const ProductReviews = ({ productId }) => {
     );
   };
 
-  // 编辑评论
   const handleEditReview = (review) => {
     setReviewToEdit(review);
     setIsEditing(true);
@@ -63,15 +50,13 @@ const ProductReviews = ({ productId }) => {
         initialData={review}
         onSubmit={async (reviewData) => {
           await dispatch(thunkUpdateReview(review.id, reviewData));
-          dispatch(thunkShowReviews(productId));  // 更新评论列表
-          dispatch(thunkGetReviewStats(productId));  // 更新评论统计
+          dispatch(thunkShowReviews(productId));
           closeModal(); 
         }}
       />
     );
   };
 
-  // 提交评论
   const handleReviewSubmit = async (reviewData) => {
     if (isEditing) {
       await dispatch(thunkUpdateReview(reviewToEdit.id, reviewData));
@@ -80,19 +65,12 @@ const ProductReviews = ({ productId }) => {
     }
     setIsEditing(false);
     setReviewToEdit(null);
-    dispatch(thunkShowReviews(productId));  // 提交后更新评论列表
-    dispatch(thunkGetReviewStats(productId));  // 更新评论统计
+    dispatch(thunkShowReviews(productId));
   };
 
   return (
     <div className='review-bar'>
       <h2>Product Reviews</h2>
-
-      <div>
-        <h3>Review Stats</h3>
-        <p>Total Reviews: {reviewStats.review_count}</p>
-        <p>Average Rating: {(typeof reviewStats.average_stars === 'number' ? reviewStats.average_stars : 0).toFixed(1)}</p>
-      </div>
 
       <div>
         <h3>Your Review</h3>

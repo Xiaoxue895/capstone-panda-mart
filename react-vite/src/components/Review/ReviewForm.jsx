@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
-  const [stars, setStars] = useState(initialData?.stars || 5);
-  const [review, setReview] = useState(initialData?.review || '');
-  const [recommendation, setRecommendation] = useState(initialData?.recommendation || false);
-
-  useEffect(() => {
-    setStars(initialData?.stars || 5);
-    setReview(initialData?.review || '');
-    setRecommendation(initialData?.recommendation || false);
-  }, [initialData]);
+const ReviewForm = ({ productId, onSubmit }) => {
+  const [stars, setStars] = useState(5);
+  const [review, setReview] = useState('');
+  const [recommendation, setRecommendation] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ stars, review, recommendation });
+    onSubmit({ stars, review, recommendation }); 
     setStars(5);
     setReview('');
     setRecommendation(false);
@@ -30,6 +24,7 @@ const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
             max="5"
             value={stars}
             onChange={(e) => setStars(Number(e.target.value))}
+            required
           />
         </label>
       </div>
@@ -39,6 +34,7 @@ const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
           <textarea
             value={review}
             onChange={(e) => setReview(e.target.value)}
+            required
           />
         </label>
       </div>
@@ -52,12 +48,13 @@ const ReviewForm = ({ productId, initialData = {}, onSubmit }) => {
           />
         </label>
       </div>
-      <button type="submit">{initialData?.id ? 'Update Review' : 'Submit Review'}</button>
+      <button type="submit">Submit Review</button>
     </form>
   );
 };
 
 export default ReviewForm;
+
 
 
 
